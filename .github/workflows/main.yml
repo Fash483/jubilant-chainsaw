@@ -25,7 +25,7 @@ jobs:
       - name: Move Files to Root and Cleanup
         run: |
           # Move everything from the nested zip folder directly into the root repository
-          cp -r temp-extraction/magnet-vault-vercel/* ./
+          cp -r temp-extraction/magnet-vault/* ./
           
           # Delete the temporary extraction folder and the original zip file
           rm -rf temp-extraction
