@@ -26,10 +26,25 @@ jobs:
           rm -rf temp-extraction
           rm magnet-vault-updated.zip
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10 # Matches the version Vercel is detecting
+
+      - name: Update Lockfile
+        run: |
+          # Force pnpm to reconcile the lockfile with the updated package.json
+          pnpm install --no-frozen-lockfile
+
       - name: Commit and Push to Root
         run: |
           git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@://github.com"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Deploy: Extract vault to root directory and remove zip" || exit 0
+          git commit -m "Deploy: Extract files, sync pnpm-lock.yaml, and remove zip" || exit 0
           git push
