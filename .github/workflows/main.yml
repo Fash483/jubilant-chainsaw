@@ -20,7 +20,7 @@ jobs:
 
       - name: Unzip to Temporary Directory
         run: |
-          unzip -o magnet-vault-updated.zip -d temp-extraction
+          unzip -o magnet-vault-vercel.zip -d temp-extraction
 
       - name: Move Files to Root and Cleanup
         run: |
@@ -29,7 +29,7 @@ jobs:
           
           # Delete the temporary extraction folder and the original zip file
           rm -rf temp-extraction
-          rm magnet-vault-updated.zip
+          rm magnet-vault-vercel.zip
 
       - name: Commit and Push to Root
         run: |
