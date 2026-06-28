@@ -98,9 +98,6 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.2.8
         version: 1.2.10(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@sentry/react':
-        specifier: ^9.47.1
-        version: 9.47.1(react@18.3.1)
       '@supabase/supabase-js':
         specifier: 2.103.1
         version: 2.103.1
