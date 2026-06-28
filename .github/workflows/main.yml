@@ -1,26 +1,35 @@
-name: Extract Zip File
+name: Extract Zip for Vercel Deployment
 
 on:
   workflow_dispatch:
 
 permissions:
-  contents: write # Grants the bot permission to push changes to the repository
+  contents: write
 
 jobs:
-  extract:
+  extract-and-clean:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Unzip File
+      - name: Unzip to Temporary Directory
         run: |
-          unzip -o magnet-vault-updated.zip -d extracted-vault
+          unzip -o magnet-vault-updated.zip -d temp-extraction
 
-      - name: Commit and Push Extracted Files
+      - name: Move Files to Root and Cleanup
+        run: |
+          # Move everything from the nested zip folder directly into the root repository
+          cp -r temp-extraction/magnet-vault/* ./
+          
+          # Delete the temporary extraction folder and the original zip file
+          rm -rf temp-extraction
+          rm magnet-vault-updated.zip
+
+      - name: Commit and Push to Root
         run: |
           git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add extracted-vault/
-          git commit -m "Automated unzip of magnet-vault-updated.zip" || exit 0
+          git config --global user.email "41898282+github-actions[bot]@://github.com"
+          git add .
+          git commit -m "Deploy: Extract vault to root directory and remove zip" || exit 0
           git push
