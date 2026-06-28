@@ -1,4 +1,4 @@
 - name: Clear Directory Except Zip
   run: |
-    # Remove all files and directories except the zip file
-    find . -mindepth 1 -not -name 'magnet-vault-vercel.zip' -exec rm -rf {} +
+    # Remove all files and directories except the zip file in the current directory
+    ls | grep -v 'magnet-vault-vercel.zip' | xargs -I {} rm -rf {}
