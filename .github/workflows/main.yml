@@ -1,0 +1,23 @@
+name: Extract Zip File
+
+on:
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Unzip File
+        run: |
+          unzip magnet-vault-updated.zip -d extracted-vault
+
+      - name: Commit and Push Extracted Files
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@://github.com"
+          git add extracted-vault/
+          git commit -m "Automated unzip of magnet-vault-updated.zip"
+          git push
