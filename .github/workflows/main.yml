@@ -1,40 +1,4 @@
-name: Extract Zip for Vercel Deployment
-
-on:
-  workflow_dispatch:
-
-permissions:
-  contents: write
-
-jobs:
-  extract-and-clean:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Clear Directory Except Zip
-        run: |
-          # Remove all files and directories except the zip file
-          find . -mindepth 1 -not -name 'magnet-vault-vercel.zip' -exec rm -rf {} +
-
-      - name: Unzip to Temporary Directory
-        run: |
-          unzip -o magnet-vault-vercel.zip -d temp-extraction
-
-      - name: Move Files to Root and Cleanup
-        run: |
-          # Move everything from the nested zip folder directly into the root repository
-          cp -r temp-extraction/magnet-vault-vercel/* ./
-          
-          # Delete the temporary extraction folder and the original zip file
-          rm -rf temp-extraction
-          rm magnet-vault-vercel.zip
-
-      - name: Commit and Push to Root
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@github.com"
-          git add .
-          git commit -m "Deploy: Extract vault to root directory and remove zip" || exit 0
-          git push
+- name: Clear Directory Except Zip
+  run: |
+    # Remove all files and directories except the zip file
+    find . -mindepth 1 -not -name 'magnet-vault-vercel.zip' -exec rm -rf {} +
